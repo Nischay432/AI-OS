@@ -1,0 +1,21 @@
+# id: PROFILE-PLATFORMS-001
+# depends_on: PROFILE-DEV-001
+# last_updated: 2026-07-24
+
+web:
+  enabled: true
+
+android:
+  enabled: true
+  note: Google Play Console lifetime approved
+
+steam:
+  enabled: true
+  note: deferred until a game project reaches build-ready state
+
+desktop:
+  enabled: true
+
+apple_ios:
+  enabled: false
+  reason: annual developer fee deferred until monetization justifies it

@@ -1,0 +1,16 @@
+# id: CONFIG-001
+# depends_on: SYSTEM-001
+# last_updated: 2026-07-24
+# System-wide toggles. This is the only file that should need editing
+# to change how AI-OS behaves globally.
+
+version: 0.4.0
+primary_ai: Claude Max
+budget_mode: lean
+token_mode: maximum_optimization
+decision_mode: evidence_based
+learning_mode: learn_while_building
+legal_mode: enabled
+security_mode: enabled
+deployment_mode: production
+repository_visibility: private

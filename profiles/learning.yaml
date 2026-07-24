@@ -1,0 +1,17 @@
+# id: PROFILE-LEARNING-001
+# depends_on: PROFILE-SKILLS-001
+# last_updated: 2026-07-24
+# No explanations here - just tracking. Reasoning lives in reference/decisions-log.md.
+
+currently_learning:
+  - React Native / Expo SDK 56 (New Architecture migration considerations)
+  - Dependency auditing and migration risk assessment
+
+recently_learned:
+  - Restructuring AI context docs (slim CLAUDE.md + task-specific skill files)
+  - package.json dependency audit methodology
+
+future_learning:
+  - A 2D/3D game engine (candidate to be chosen via DECISION_FRAMEWORK.md)
+  - AI-assisted asset generation workflow (video/image gen tools)
+  - MCP servers relevant to app/game dev flows

@@ -1,0 +1,38 @@
+# id: PROFILE-SKILLS-001
+# depends_on: PROFILE-DEV-001
+# last_updated: 2026-07-24
+# Levels: None, Beginner, Intermediate, Advanced
+# Rule: Claude should not re-explain fundamentals for anything marked Advanced.
+
+frontend:
+  React: Advanced
+  Next.js: Advanced
+  TypeScript: Advanced
+  JavaScript: Advanced
+  Tailwind CSS: Advanced
+  MUI: Advanced
+
+state_data:
+  RTK Query: Advanced
+
+mobile:
+  React Native (Expo): Intermediate
+  Native build tooling (Android/iOS): Beginner
+
+backend:
+  Node.js: Beginner
+
+tooling:
+  Git: Advanced
+  GTM: Intermediate
+  CleverTap: Intermediate
+
+game_dev:
+  Godot (GDScript): None  # engine chosen via DECISION-003, not yet used
+  2D game dev fundamentals: None
+  3D game dev fundamentals: None
+
+ai_tooling:
+  AI video/image generation tools (Kling, Runway, Higgsfield, Seedance, Luma, Google Flow): Beginner  # evaluated in reference/tool-evaluations.md, not yet used on a real project
+  AI research/notes tools (NotebookLM): Beginner  # adopted for research use, see tool-evaluations.md
+  MCP ecosystem: Beginner

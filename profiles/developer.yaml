@@ -1,0 +1,37 @@
+# id: PROFILE-DEV-001
+# depends_on: MISSION-001
+# last_updated: 2026-07-24
+
+identity:
+  name: Nischay
+  role: SDE 1, UI Team
+  employer: FlyCT
+  products: [Cleartrip Arabia, Flyin]
+  location: Bangalore, India
+  education: B.Tech, Chitkara University (2021-2025)
+
+mission:
+  primary: Become an independent software founder shipping apps and games
+  secondary: Extend frontend skill into game dev and native/mobile without abandoning production quality
+
+budget:
+  mode: lean
+  approved: [Claude Max, Google Play Console lifetime]
+  conditional: [domain purchase - when a project is launch-ready]
+  deferred: [Apple Developer Program, paid design software, paid hosting, premium AI subscriptions]
+
+learning_style:
+  preference: learn while building real projects
+  depth: skip fundamentals already at Advanced level (see skills.yaml)
+  iteration: expects multiple rounds of refinement, not a first-draft-final answer
+
+coding_philosophy:
+  - production-shaped code from the start, not throwaway prototypes
+  - typed over untyped (TypeScript by default)
+  - evidence-based tech choices over trend-following
+  - one source of truth, no duplicated docs/config
+
+output_preferences:
+  tone: concise, direct, no sycophancy, no emojis
+  format: no filler openers/closers, no repeated praise
+  code: production-quality, commented only where non-obvious
