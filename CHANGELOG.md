@@ -1,7 +1,7 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.6.0
+version: 0.6.1
 status: Living document
 owner: Nischay
 depends_on: []
@@ -11,6 +11,11 @@ last_updated: 2026-08-02
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.6.1] - 2026-08-02
+
+### Changed
+- `playbooks/ship-cf-workers-multiplayer.md`: custom-domain deploy step added (earned wiring maze.tinygridlabs.com — bought via Cloudflare Registrar, at-cost, card-only/no-UPI; `custom_domain` route silently disables workers.dev unless `workers_dev: true` is explicit)
 
 ## [0.6.0] - 2026-08-02
 

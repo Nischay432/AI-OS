@@ -1,7 +1,7 @@
 ---
 id: PLAY-CFSHIP-001
 title: Ship a Cloudflare Workers multiplayer game
-version: 0.6.0
+version: 0.6.1
 status: Stable
 owner: Nischay
 depends_on: [REF-DECISIONS-001]
@@ -35,6 +35,7 @@ Earned by shipping Maze Rush (2026-08-02) — the first real project through AI-
 
 - `npm run deploy` (build client → `wrangler deploy`, assets + DOs one unit). Needs `wrangler login` (interactive) or `CLOUDFLARE_API_TOKEN` in CI/non-interactive shells.
 - Windows note: wrangler needs Node ≥22; nvm-windows `use` silently fails without an elevated console — drop the official Node zip into `%APPDATA%\nvm\v<ver>` and PATH-prepend instead.
+- Custom domain (domain must be in the same Cloudflare account — Registrar needs a card/PayPal, no UPI; buy elsewhere with UPI and point nameservers if needed): add `"routes": [{ "pattern": "sub.domain.tld", "custom_domain": true }]` — DNS + TLS are automatic. Adding it silently disables the workers.dev route; set `"workers_dev": true` explicitly to keep both URLs alive.
 
 ## Post-ship
 
