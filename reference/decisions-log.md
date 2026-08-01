@@ -1,7 +1,7 @@
 ---
 id: REF-DECISIONS-001
 title: Decisions Log
-version: 0.5.0
+version: 0.6.0
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
@@ -11,6 +11,46 @@ last_updated: 2026-08-02
 # Decisions Log
 
 Append-only. Format defined in `DECISION_FRAMEWORK.md`. Newest at top.
+
+---
+
+### DECISION-008: Maze Rush license + monetization path
+
+- **Options considered:** MIT (open portfolio asset), PolyForm Noncommercial, private repo with no license; monetization via Google AdSense/H5 Games Ads on own domain vs. CrazyGames/Poki portal submission
+- **Chose:** MIT license; portal-first monetization (submit to CrazyGames after ship-polish), no ads on own deployment
+- **Why:** client JS is always readable regardless of license — the real moat is the multiplayer backend (Durable Objects infra) plus portal first-mover, so open-sourcing costs little and the hiring value of a readable 2.3k-LOC real-time game exceeds clone risk. AdSense H5 Games Ads requires the AdSense-for-Games program with traffic minimums (≈$0 at hobby traffic); portals bring their own traffic and handle ads via SDK rev-share.
+- **Reversible?:** license effectively no (MIT grants are perpetual for shipped versions); monetization path yes — portal terms are per-submission.
+- **Date:** 2026-08-02
+
+---
+
+### DECISION-007: Defer Durable Object hibernation/alarm refactor
+
+- **Options considered:** full WebSocket-hibernation-API rewrite with alarm-driven phase timers, status quo (in-memory setTimeout only), status quo + one durable safety alarm
+- **Chose:** status quo + one durable safety alarm per round (`setAlarm(roundStart + timeLimit + 30s)` force-ends stuck rounds)
+- **Why:** open sockets pin the DO in memory, so setTimeout timers only die on rare isolate restarts; the full rewrite is ~a day of risky refactor for a failure mode whose blast radius is now "round force-ends 30s late" instead of "room hangs forever."
+- **Reversible?:** yes — revisit trigger: observed stalled rounds in production, or DO duration billing becoming material.
+- **Date:** 2026-08-02
+
+---
+
+### DECISION-006: Maze generation algorithm (Maze Rush)
+
+- **Options considered:** keep perfect-maze DFS + add mechanics (keys/doors/teleporters), Prim/Kruskal variants, growing-tree + braiding + farthest-pair endpoints + seeded PRNG
+- **Chose:** growing-tree carve (windiness 0.75) + braiding (10–35% of dead ends into loops, bridging only similar-BFS-distance cells so loops don't shortcut par) + double-BFS farthest-pair start/exit + mulberry32 seed
+- **Why:** the "too easy" complaint was structural — unique path, fixed corners, whole board visible. This fixes the maze itself with zero new wire messages or art, and the seed enables solo mode, replays, and deterministic tests. New mechanics deferred: they need protocol, validation, and balance work disproportionate to a first ship.
+- **Reversible?:** yes — generator is a pure function behind one call site per consumer.
+- **Date:** 2026-08-02
+
+---
+
+### DECISION-005: Fog of war — client-side mask over server visibility streaming
+
+- **Options considered:** server streams only visible cells per player (map-hack-proof), client-side fog mask over a fully-shipped maze, hybrid (server ships maze late)
+- **Chose:** client-side fog mask + camera lock; the full maze still ships in `round_start`
+- **Why:** opponent positions were already server-scoped (the only leak that decides races); the reveal phase intentionally shows everyone the full maze for 5s anyway, so a map-hack yields memorization, not teleporting — moves stay server-validated. Server-side cell streaming would break optimistic movement prediction on unknown cells and roughly double the netcode for a casual game.
+- **Reversible?:** yes — revisit trigger: actual map-hack abuse observed.
+- **Date:** 2026-08-02
 
 ---
 

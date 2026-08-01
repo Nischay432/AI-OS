@@ -1,7 +1,7 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.5.0
+version: 0.6.0
 status: Living document
 owner: Nischay
 depends_on: []
@@ -11,6 +11,15 @@ last_updated: 2026-08-02
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.6.0] - 2026-08-02
+
+### Added — First real project shipped through AI-OS (Maze Rush)
+- `playbooks/ship-cf-workers-multiplayer.md` (PLAY-CFSHIP-001) — the first earned playbook: hygiene checklist, resilience baseline, local multiplayer test protocol, deploy notes
+- DECISION-005 (client-side fog mask), DECISION-006 (growing-tree + braid + farthest-pair maze generation), DECISION-007 (defer DO hibernation refactor), DECISION-008 (MIT license + portal-first monetization) in `reference/decisions-log.md`
+
+### Changed
+- `PHASES.md`: Phase 5's "one app has shipped" trigger is now half-met — Maze Rush shipped 2026-08-02 (game track; the Godot track remains open)
 
 ## [0.5.0] - 2026-08-02
 

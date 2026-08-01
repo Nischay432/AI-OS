@@ -1,7 +1,7 @@
 ---
 id: PHASES-001
 title: Phase Map
-version: 0.5.0
+version: 0.6.0
 status: Living document
 owner: Nischay
 depends_on: [SYSTEM-001, ROADMAP-001]
@@ -57,6 +57,12 @@ Delivered:
 - Consistency pass: ROADMAP rewritten to match reality, README tree regenerated, `learning.yaml`/`platforms.yaml` de-staled, EVAL IDs added, templates modernized (Tailwind v4, reproducible Expo command, Godot pin note).
 
 **What's still open:** nothing in this phase. Phase 5 remains the next milestone and still requires real shipping.
+
+## Interlude — first real ship: Maze Rush (v0.6.0, 2026-08-02)
+
+Maze Rush (Cloudflare Workers multiplayer maze race, pre-existing project) was polished and shipped through AI-OS: maze-generation overhaul (DECISION-006), true fog of war (DECISION-005), reconnect/rejoin, solo time-trial mode, MIT license + CI (DECISION-008), DO-durability deferral (DECISION-007). Produced the first earned playbook: `playbooks/ship-cf-workers-multiplayer.md` (PLAY-CFSHIP-001).
+
+This half-fires Phase 5's trigger ("at least one app and one game have shipped"): a game has now shipped, though via the web stack rather than the Godot track, which stays open.
 
 ## Phase 5 — v1.0.0 consolidation — BLOCKED (not skippable)
 
