@@ -1,11 +1,11 @@
 ---
 id: ARCH-001
 title: Architecture Detail
-version: 0.1.0
+version: 0.5.0
 status: Stable
 owner: Nischay
 depends_on: [SYSTEM-001]
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # Architecture Detail
@@ -38,7 +38,15 @@ Reading order for a first-time load: `MISSION` → `PRINCIPLES` → `DECISION_FR
 | `templates/` | Starter scaffolds (e.g. RN+Expo app skeleton) | First real project of that type |
 | `workflows/` | Multi-step processes spanning tools (e.g. asset pipeline: Kling → optimize → import) | First time the workflow is used twice |
 | `reference/` | Decisions log, tool evaluations, external research notes | Ongoing, append-only |
+| `prompts/` | Reusable prompt snippets for chat-paste fallback | The second time the same prompt is written by hand in a real session |
+| `docs/` | Expanded architecture detail (this file) | Now (Phase 1) |
 | `assets/` | Non-text files the OS itself needs (diagrams, logos) | As needed |
+| `scripts/` | Repo tooling (`validate.mjs`) | v0.5.0 |
+| `.claude/` | Claude Code-native config: rules, skills, settings | v0.5.0 |
+
+## Verification
+
+Conventions here are enforced, not aspirational. `scripts/validate.mjs` (zero-dependency Node, run via `node scripts/validate.mjs` and on every push by `.github/workflows/validate.yml`) checks: frontmatter presence/shape on all markdown, ID uniqueness, cross-reference integrity (every cited `DECISION-*`/`EVAL-*`/`PRINCIPLE-*`/frontmatter ID must resolve), version consistency per DECISION-004, internal path existence, decision-log block format, and staleness warnings. A red validator blocks a release.
 
 ## Why folders start empty
 

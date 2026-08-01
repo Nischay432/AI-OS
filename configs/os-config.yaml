@@ -1,11 +1,11 @@
 # id: CONFIG-001
 # depends_on: SYSTEM-001
-# last_updated: 2026-07-24
+# last_updated: 2026-08-02
 # System-wide toggles. This is the only file that should need editing
 # to change how AI-OS behaves globally.
+# Repo version lives in CHANGELOG.md only (DECISION-004, PRINCIPLE-007).
 
-version: 0.4.0
-primary_ai: Claude Max
+primary_ai: Claude Max (via Claude Code)
 budget_mode: lean
 token_mode: maximum_optimization
 decision_mode: evidence_based

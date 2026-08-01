@@ -1,3 +1,13 @@
+---
+id: TPL-APP-001
+title: App Starter — Expo (React Native) + TypeScript + RTK Query
+version: 0.5.0
+status: Stable
+owner: Nischay
+depends_on: [REF-DECISIONS-001]
+last_updated: 2026-08-02
+---
+
 # App Starter — Expo (React Native) + TypeScript + RTK Query
 
 Backed by DECISION-002. Use this as the first commit of any new daily-use mobile app.
@@ -10,10 +20,13 @@ Backed by DECISION-002. Use this as the first commit of any new daily-use mobile
 ## Setup
 
 ```bash
-npx create-expo-app@latest my-app -t
+npx create-expo-app@latest my-app --template blank-typescript
 cd my-app
 npx expo install @reduxjs/toolkit react-redux
+npx expo install @react-navigation/native @react-navigation/native-stack react-native-screens react-native-safe-area-context
 ```
+
+(`--template blank-typescript` keeps the command reproducible — a bare `-t` drops into an interactive picker.)
 
 Copy `src/store/` from this template as the starting Redux setup.
 

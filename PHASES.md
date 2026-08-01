@@ -1,11 +1,11 @@
 ---
 id: PHASES-001
 title: Phase Map
-version: 0.1.0
-status: Living document — update as phases complete
+version: 0.5.0
+status: Living document
 owner: Nischay
 depends_on: [SYSTEM-001, ROADMAP-001]
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # Phase Map
@@ -46,6 +46,17 @@ Delivered:
 - Repo-level `.gitignore` added (Godot's `.godot/`/`*.import`, Node's `node_modules/`/`.next/`/`.expo/`) so future real projects built from any of the three templates don't accidentally commit build artifacts.
 
 **What's still open:** `game_dev` skill level in `profiles/skills.yaml` stays at `None` until you've actually opened this in the Godot editor and built something beyond the boot-check label. First real mechanic built on top of this scaffold is the trigger for `playbooks/ship-godot-<platform>.md`.
+
+## Phase 4.5 — Hardening & Claude Code integration — ✅ DONE (v0.5.0)
+
+Delivered:
+- Version semantics settled (DECISION-004): repo version = newest CHANGELOG entry; per-file `version` = last material change. Version drift is now impossible by construction.
+- `scripts/validate.mjs` + `.github/workflows/validate.yml` — every convention (frontmatter, IDs, cross-references, versions, paths, decision format) is machine-enforced on every push.
+- `reference/claude-code-guide.md` (REF-CCODE-001) — session continuity, memory, token management, skills/hooks/subagents, headless mode.
+- Repo is Claude Code-native: `.claude/settings.json`, path-scoped rule for `templates/`, `/log-decision` skill; chat-paste demoted to fallback (`prompts/` populated with the two earned prompts).
+- Consistency pass: ROADMAP rewritten to match reality, README tree regenerated, `learning.yaml`/`platforms.yaml` de-staled, EVAL IDs added, templates modernized (Tailwind v4, reproducible Expo command, Godot pin note).
+
+**What's still open:** nothing in this phase. Phase 5 remains the next milestone and still requires real shipping.
 
 ## Phase 5 — v1.0.0 consolidation — BLOCKED (not skippable)
 

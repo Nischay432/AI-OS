@@ -1,11 +1,11 @@
 ---
 id: README-001
 title: AI-OS
-version: 0.1.0
+version: 0.5.0
 status: Stable
 owner: Nischay
 depends_on: []
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # AI-OS
@@ -20,20 +20,19 @@ Without a system, every new project restarts from zero: re-explaining skill leve
 
 ## How it's used
 
-1. Open a new chat, paste `CLAUDE.md` + the relevant `profiles/*.yaml` as context.
-2. State the project or problem.
-3. Claude answers using `DECISION_FRAMEWORK.md` for tech choices and `PRINCIPLES.md` as constraints.
-4. Anything reusable that comes out of the conversation (a playbook, a template, a decision) gets committed back into the repo.
+**Primary — Claude Code:** open a session in this repo (or any project repo that imports from it). `CLAUDE.md` auto-loads; Claude reads `PHASES.md` for state and `reference/decisions-log.md` for what's settled. Sessions are named and resumable (`claude --resume <name>`); decisions get logged via `/log-decision`; `scripts/validate.mjs` gates every commit. Full mechanics: `reference/claude-code-guide.md`.
 
-The repo is the source of truth. The chat is disposable.
+**Fallback — chat paste:** paste `CLAUDE.md` + the relevant `profiles/*.yaml` (see the loadout table in `SYSTEM.md`, and `prompts/` for ready-made prompts).
+
+Either way: Claude answers using `DECISION_FRAMEWORK.md` for tech choices and `PRINCIPLES.md` as constraints, and anything reusable gets committed back. The repo is the source of truth. The chat is disposable.
 
 ## Layers
 
 | Layer | Changes | Contains |
 |---|---|---|
 | **Core** | Rarely | Mission, Principles, Decision Framework, System architecture |
-| **Intelligence** | Occasionally | `CLAUDE.md`, MCP strategy, context-loading rules |
-| **Knowledge** | Frequently | Profiles, configs, playbooks, templates, per-project reference |
+| **Intelligence** | Occasionally | `CLAUDE.md`, `.claude/` config, context-loading rules |
+| **Knowledge** | Frequently | Profiles, configs, playbooks, templates, prompts, per-project reference |
 
 ## Structure
 
@@ -46,9 +45,16 @@ AI-OS/
 ├── SYSTEM.md
 ├── CLAUDE.md
 ├── ROADMAP.md
-├── CHANGELOG.md
+├── CHANGELOG.md          # newest entry here IS the repo version (DECISION-004)
+├── PHASES.md             # what's built, what's next — read first each session
 ├── LICENSE
-├── PHASES.md            # what's built, what's next
+├── .claude/
+│   ├── settings.json     # permission allowlist
+│   ├── rules/templates.md
+│   └── skills/log-decision/SKILL.md
+├── .github/workflows/validate.yml
+├── scripts/
+│   └── validate.mjs      # convention validator — run before every commit
 ├── configs/
 │   └── os-config.yaml
 ├── profiles/
@@ -58,18 +64,26 @@ AI-OS/
 │   └── platforms.yaml
 ├── docs/
 │   └── Architecture.md
-├── playbooks/           # populated per real project
-├── templates/           # populated per real project
-├── workflows/           # populated per real project
-├── reference/           # populated per real project
-├── prompts/             # reusable prompt snippets, populated as needed
+├── reference/
+│   ├── decisions-log.md
+│   ├── tool-evaluations.md
+│   └── claude-code-guide.md
+├── templates/
+│   ├── web-nextjs-starter/
+│   ├── app-expo-rn-starter/
+│   └── game-godot-starter/
+├── prompts/
+│   ├── new-project-kickoff.md
+│   └── log-a-decision.md
+├── playbooks/            # empty until something ships (see docs/Architecture.md)
+├── workflows/            # empty until a workflow is used twice
 └── assets/
 ```
 
 ## Versioning
 
-Semantic versioning (`v0.1.0` → `v1.0.0`). No date-based versions. Every milestone is one commit. See `CHANGELOG.md` for history and `PHASES.md` for what's next.
+Semantic versioning (`v0.1.0` → `v1.0.0`). The newest `CHANGELOG.md` entry is the repo version; per-file frontmatter `version` marks when that file last materially changed (DECISION-004). See `PHASES.md` for what's next.
 
 ## Document conventions
 
-Every markdown file opens with frontmatter (`id`, `title`, `version`, `status`, `owner`, `depends_on`, `last_updated`). Cross-references use IDs (`PRINCIPLE-004`, `DECISION-002`), not titles, so files can be renamed without breaking links.
+Every markdown file opens with frontmatter (`id`, `title`, `version`, `status`, `owner`, `depends_on`, `last_updated`). Cross-references use IDs (`PRINCIPLE-004`, `DECISION-002`, `EVAL-003`), not titles, so files can be renamed without breaking links. `scripts/validate.mjs` enforces all of this.

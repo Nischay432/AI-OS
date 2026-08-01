@@ -1,6 +1,41 @@
+---
+id: CHANGELOG-001
+title: Changelog
+version: 0.5.0
+status: Living document
+owner: Nischay
+depends_on: []
+last_updated: 2026-08-02
+---
+
 # Changelog
 
-All notable changes to AI-OS. Semantic versioning (no date-based versions).
+All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.5.0] - 2026-08-02
+
+### Added — Hardening & Claude Code integration
+- `scripts/validate.mjs` — zero-dependency convention validator (frontmatter, ID uniqueness, cross-reference integrity, version consistency, path existence, decision format)
+- `.github/workflows/validate.yml` — validator runs on every push/PR
+- `reference/claude-code-guide.md` (REF-CCODE-001) — session continuity, memory, token management, skills/hooks/subagents, headless mode
+- `.claude/settings.json`, `.claude/rules/templates.md`, `.claude/skills/log-decision/` — repo is now Claude Code-native, not just chat-paste
+- `prompts/new-project-kickoff.md` (PROMPT-001), `prompts/log-a-decision.md` (PROMPT-002)
+- DECISION-004 (version semantics) in `reference/decisions-log.md`
+
+### Changed
+- `ROADMAP.md` rewritten to record what actually shipped in v0.2–0.4 (old draft predicted different milestones)
+- `README.md` structure tree and usage model updated (Claude Code primary, chat-paste fallback)
+- `SYSTEM.md`: versioning-semantics section; loadout table now includes `reference/decisions-log.md` and a Claude Code row
+- `CLAUDE.md`: Claude Code session protocol added
+- `profiles/learning.yaml`: engine choice moved to currently-learning (settled per DECISION-003); asset-gen/MCP marked deferred with pointers
+- `profiles/platforms.yaml`: `steam.enabled` false (deferred — encoding matches `apple_ios`)
+- Frontmatter + IDs added to `CHANGELOG.md`, `reference/*`, `templates/*/README.md`; tool evaluations got citable `EVAL-00n` IDs
+- Templates modernized: Tailwind v4 (CSS-first), reproducible Expo command + React Navigation install, Godot version-pin note, boot-string parity fix
+- `PRINCIPLES.md`: PRINCIPLE-009 clarified (minimal-but-working ≠ placeholder)
+
+### Removed
+- `version:` key from `configs/os-config.yaml` (repo version lives in CHANGELOG only — DECISION-004)
+- `templates/web-nextjs-starter/tailwind.config.ts` (obsolete under Tailwind v4)
 
 ## [0.4.0] - 2026-07-24
 

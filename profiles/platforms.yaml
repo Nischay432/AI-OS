@@ -1,6 +1,6 @@
 # id: PROFILE-PLATFORMS-001
 # depends_on: PROFILE-DEV-001
-# last_updated: 2026-07-24
+# last_updated: 2026-08-02
 
 web:
   enabled: true
@@ -10,8 +10,8 @@ android:
   note: Google Play Console lifetime approved
 
 steam:
-  enabled: true
-  note: deferred until a game project reaches build-ready state
+  enabled: false
+  reason: deferred until a game project reaches build-ready state (framework step 5 reads the boolean; same encoding as apple_ios)
 
 desktop:
   enabled: true

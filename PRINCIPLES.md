@@ -1,11 +1,11 @@
 ---
 id: PRINCIPLES-001
 title: Engineering Principles
-version: 0.1.0
+version: 0.5.0
 status: Stable
 owner: Nischay
 depends_on: [MISSION-001]
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # Principles
@@ -37,4 +37,4 @@ A fact lives in exactly one file. Other files reference it by ID, never restate 
 Licensing, IP, app-store policy, and data-handling questions get addressed before a project reaches users, not after.
 
 **PRINCIPLE-009 — Every artifact in this repo must be committable as-is.**
-No placeholders, no "TODO: fill in later" left in committed files. If it's not ready, it doesn't go in.
+No placeholders, no "TODO: fill in later" left in committed files. If it's not ready, it doesn't go in. A minimal-but-working artifact (e.g. a boot-check scaffold that runs) is not a placeholder; an empty stub pretending to be content is.

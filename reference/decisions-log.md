@@ -1,6 +1,26 @@
+---
+id: REF-DECISIONS-001
+title: Decisions Log
+version: 0.5.0
+status: Living document
+owner: Nischay
+depends_on: [FRAMEWORK-001]
+last_updated: 2026-08-02
+---
+
 # Decisions Log
 
 Append-only. Format defined in `DECISION_FRAMEWORK.md`. Newest at top.
+
+---
+
+### DECISION-004: Version semantics
+
+- **Options considered:** duplicate version in `configs/os-config.yaml` + frontmatter (status quo), single source in CHANGELOG with per-file change markers, mass-bump every file each release
+- **Chose:** repo version = newest `CHANGELOG.md` entry; per-file frontmatter `version` = repo version at last material change
+- **Why:** the status quo violated PRINCIPLE-007 (version stated in two places, already drifted 0.1.0 vs 0.4.0 by v0.4.0); mass-bumping fakes change history. This makes drift structurally impossible and is machine-checkable by `scripts/validate.mjs`.
+- **Reversible?:** yes, cheap — it's a convention plus one validator rule.
+- **Date:** 2026-08-02
 
 ---
 

@@ -1,16 +1,16 @@
 ---
 id: CLAUDE-001
 title: Claude Operating Manual
-version: 0.1.0
+version: 0.5.0
 status: Stable
 owner: Nischay
 depends_on: [SYSTEM-001, PRINCIPLES-001, FRAMEWORK-001]
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # Claude Operating Manual
 
-How Claude should behave inside any AI-OS-context conversation. Paste this file (plus relevant `profiles/*`) at the start of a project chat.
+How Claude should behave inside any AI-OS-context conversation. **Claude Code loads this file automatically** when working in this repo. For plain-chat usage (fallback), paste this file plus relevant `profiles/*` at the start of the chat.
 
 ## Who I'm working with
 
@@ -28,6 +28,17 @@ Full detail lives in `profiles/skills.yaml` and `profiles/developer.yaml` — th
 6. **Never fabricate a "decision" as settled.** If something hasn't actually been decided and logged in `reference/decisions-log.md`, treat it as open.
 7. **Keep new files empty until earned.** Don't pre-write a `playbooks/` or `templates/` entry speculatively — write it after the task has actually been done once (see `docs/Architecture.md`).
 8. **Surface tradeoffs, not just answers.** Especially for irreversible or expensive choices, name what's being given up.
+
+## Claude Code sessions
+
+When running inside Claude Code (the normal mode now — see `reference/claude-code-guide.md` / REF-CCODE-001 for the full mechanics):
+
+1. **Start:** read `PHASES.md` for current state. Don't re-derive it.
+2. **Before proposing any stack/tool:** check `reference/decisions-log.md` — cite settled decisions by ID instead of re-deciding (rule 6).
+3. **Before any commit:** run `node scripts/validate.mjs`; a red validator blocks the commit.
+4. **Name sessions** (`/rename <topic>`) so they're resumable via `claude --resume <name>`.
+5. **Token discipline (PRINCIPLE-006):** delegate large file sweeps to subagents; `/context` when heavy; `/compact` before long hauls rather than letting auto-compact pick the moment.
+6. **End:** any new decision/evaluation gets logged (use `/log-decision`); `PHASES.md` updated if state changed. A session that produced neither shipped work nor a committed file was a chat, not AI-OS use.
 
 ## MCP / external tool posture
 

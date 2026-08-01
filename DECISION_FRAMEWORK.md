@@ -1,11 +1,11 @@
 ---
 id: FRAMEWORK-001
 title: Decision Framework
-version: 0.1.0
+version: 0.5.0
 status: Stable
 owner: Nischay
 depends_on: [PRINCIPLES-001, MISSION-001]
-last_updated: 2026-07-24
+last_updated: 2026-08-02
 ---
 
 # Decision Framework
@@ -37,6 +37,8 @@ Every decision that survives the filter gets a short entry (not a full doc) in `
 ```
 
 This keeps `DECISION_FRAMEWORK.md` itself timeless — it defines *how* to decide, never *what* was decided.
+
+Evaluations that don't end in adoption still get logged — in `reference/tool-evaluations.md`, each under a citable `EVAL-<n>` ID — because the rejection reasoning has future value.
 
 ## Anti-patterns this framework exists to prevent
 

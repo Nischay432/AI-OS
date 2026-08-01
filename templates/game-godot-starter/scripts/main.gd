@@ -1,8 +1,8 @@
 extends Node2D
 
-# Entry point for the AI-OS game starter.
-# Replace this with real game logic once a specific project starts —
-# this file's only job is to prove the scaffold boots.
+# Boot-check entry point for the AI-OS game starter.
+# Its purpose is to prove the scaffold boots. Forked projects replace it;
+# the starter keeps it (PRINCIPLE-009: minimal-but-working, not a placeholder).
 
 func _ready() -> void:
 	print("AI-OS game starter running.")
