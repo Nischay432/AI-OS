@@ -1,11 +1,11 @@
 ---
 id: REF-TOOLS-001
 title: Tool Evaluations
-version: 0.5.0
+version: 0.7.1
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
-last_updated: 2026-08-03
+last_updated: 2026-08-18
 ---
 
 # Tool Evaluations
@@ -73,6 +73,17 @@ Covers: NotebookLM, Kling AI, Higgsfield AI, Runway ML, Seedance, Google Flow, L
 - **Rejected:** web-search MCPs (Claude Code has built-in WebSearch/WebFetch + browser — pure redundancy) and any "token optimization" MCP (doesn't exist as a category; token discipline is PRINCIPLE-006 practice, and every added MCP *costs* context).
 - **Step 1 (free-first):** pass for both — no card, no key, local execution.
 - **Date:** 2026-08-03. Re-verify package health if either misbehaves; both are drop-one-line-from-config reversible.
+
+## EVAL-009: ECC agent-harness bundle (`affaan-m/ecc`) — ⚠️ Cherry-picked one idea; wholesale install rejected
+
+- **Context:** evaluated as a source of reusable Claude Code artifacts — 285 skills, 68 agents, 94 legacy command shims, a hook set, and an MCP config bundle, MIT-licensed, cross-harness (Claude Code, Codex, Cursor, Gemini, Zed).
+- **Adopted:** nothing as-shipped. One idea was adapted — the structured review-packet from its `council-multi-model` skill (untrusted-content framing, four fixed critique questions, verbatim quoting, honest "review absent" labelling) became a local `critique-packet` skill at user scope, with zero dependencies. It encodes the workflow DECISION-019 already describes.
+- **Rejected — wholesale install (step 6):** 285 skills plus 68 agents is a large standing context cost, and the hook set registers Node scripts on `PreToolUse *`, `PostToolUse *`, `Stop` and `SessionStart` — code on every tool call. That is the exact inverse of PRINCIPLE-006, and two of its hooks actively block edits. The installer's real behaviour lives in an unaudited Node script, so `install.sh` was not run.
+- **Rejected — `council-multi-model` as shipped (step 1):** requires the Codex CLI plus OpenAI credentials. Paid dependency for something already done free by pasting into two chat UIs. Fails free-first outright.
+- **Rejected — redundant with what already exists:** its session/handoff and compaction skills duplicate the checkpoint skill and size-band hook built under DECISION-018; its code-review and security-review skills duplicate ones Claude Code already ships; its `context-budget` audit duplicates `/context`. Same reasoning as EVAL-008 rejecting web-search MCPs.
+- **Caveat on popularity:** the repo reports an implausible star count for its age and profile. Treat the social proof as unverified and judge files on their contents — which is why only files actually read were reused.
+- **Standing rule:** harness bundles get mined for *patterns*, never installed wholesale. A skill earns a place the same way a playbook does — after the manual version has been done at least twice.
+- **Date:** 2026-08-18. Revisit only if a specific repeated task has no local answer.
 
 ---
 

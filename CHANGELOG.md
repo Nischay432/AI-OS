@@ -1,7 +1,7 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.7.0
+version: 0.7.1
 status: Living document
 owner: Nischay
 depends_on: []
@@ -11,6 +11,11 @@ last_updated: 2026-08-18
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.7.1] - 2026-08-18
+
+### Added
+- EVAL-009 in `reference/tool-evaluations.md` — the ECC agent-harness bundle (285 skills / 68 agents / hook set) evaluated and **not** adopted wholesale: standing context cost and hooks on every tool call invert PRINCIPLE-006, its multi-model council needs a paid OpenAI dependency (fails step 1), and its session/review/context skills duplicate DECISION-018's checkpoint hook and Claude Code built-ins. One pattern was adapted into a local `critique-packet` skill. New standing rule: harness bundles get mined for patterns, never installed wholesale.
 
 ## [0.7.0] - 2026-08-18
 
