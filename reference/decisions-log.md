@@ -1,16 +1,72 @@
 ---
 id: REF-DECISIONS-001
 title: Decisions Log
-version: 0.6.0
+version: 0.6.2
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
-last_updated: 2026-08-02
+last_updated: 2026-08-05
 ---
 
 # Decisions Log
 
 Append-only. Format defined in `DECISION_FRAMEWORK.md`. Newest at top.
+
+---
+
+### DECISION-013: On Record monetization model
+
+- **Options considered:** $5–8/mo subscription (original plan), seasonal one-time packs, B2B seats sold to engineering managers, ad-supported
+- **Chose:** free forever for the daily loop (capture, standup generation, weekly recap, timeline, evidence view); paid one-time packs priced to the moment of need — Promotion Packet $29, Interview Packet $29; Profile Pro ~$39/yr deferred to v2. No monthly subscription, no B2B in v1.
+- **Why:** the habit is the moat, so paywalling it destroys the dataset that makes the product defensible. Both external critiques independently rejected the subscription (developers read a recurring charge on a text box as a tax) and independently rejected B2B for a solo dev with a day job — SOC2, security review and procurement are an enterprise sales motion, not a nights-and-weekends one. Economics accepted honestly: ~35 sales/mo = $1k/mo at ~2% conversion on ~1,750 visitors; realistic solo ceiling $2–5k/mo, not a rocket ship.
+- **Trade-off accepted:** one-time pricing caps LTV at ~$29/customer vs. a subscription's theoretical ~$48, in exchange for matching the actual purchase trigger (review season, 2–4x/year) instead of fighting it.
+- **Reversible?:** yes, cheap — pricing is config plus Stripe products; revisit trigger is evidence that a meaningful cohort logs year-round rather than seasonally.
+- **Date:** 2026-08-05
+
+---
+
+### DECISION-012: On Record growth representation — trajectories, not proficiency scores
+
+- **Options considered:** numeric proficiency score per skill (0–100), auto-assigned ladder level, pure evidence timeline with no growth signal, evidence-backed trajectories
+- **Chose:** three trajectories per skill — Momentum (increasing/steady/fading), Expansion (what's newly entering the map), Ownership (bugfix → feature → architecture → mentoring). The touched → used → owned → taught ladder is retained but the system only *suggests* a stage with stated confidence and shows the evidence; it never auto-assigns or grades.
+- **Why:** a number invites an argument the product can never win ("why am I 67 and not 71?") and turns every session into a defense of the algorithm. A pure evidence timeline is defensible but reduces the product to a git-log UI. Trajectories keep the growth signal — the emotional core of the idea — while making every claim traceable to dated evidence, so the app aggregates facts rather than issuing verdicts.
+- **Trade-off accepted:** loses the single legible "score" that would have made the visual skill map instantly screenshot-able and shareable; gains trust, which the north-star metric depends on.
+- **Reversible?:** yes — the extraction layer stores structured skill events either way; presentation is a view over them.
+- **Date:** 2026-08-05
+
+---
+
+### DECISION-011: On Record evidence ingestion — OAuth-first with CLI fallback
+
+- **Options considered:** GitHub OAuth only, local CLI only, manual entry only, source-adapter architecture with all three
+- **Chose:** source-adapter architecture. GitHub OAuth is the front door; a local CLI (npm global, post-commit hook, metadata only — hash/timestamp/message/branch, never diffs or file contents) is offered **only after OAuth fails**, positioned as "Enterprise Safe Mode"; manual entry always available. Everything downstream of the adapter is identical.
+- **Why:** manual-only loses outright to Notion/Obsidian/Apple Notes (blank-page problem kills the habit), so auto-drafting is non-negotiable. But enterprise IT commonly blocks third-party OAuth to corporate GitHub orgs, which would silently degrade the product into a weekend-side-project tracker — the sleeper failure mode. A CLI answers that without putting a terminal install in front of every new signup, which would destroy the funnel. Passes step 3 (Node CLI is a modest extension, not a new stack) and step 4 (adapters keep ingestion swappable).
+- **Trade-off accepted:** two ingestion paths to maintain instead of one, and the CLI needs a `.devlogignore` plus a regex scrubber for credentials and ticket IDs before transmit — a leaked key in a commit message is a get-the-user-fired bug, not a cosmetic one. Also accepted: git captures roughly half the work (Slack debugging, design calls, incidents, mentoring, code review leave no commit), which is why the manual reflection field is the highest-value data in the system, not a nice-to-have.
+- **Reversible?:** yes — adapters are behind one interface; the CLI can be dropped or deferred without touching the rest.
+- **Date:** 2026-08-05
+
+---
+
+### DECISION-010: On Record stack and hosting
+
+- **Options considered:** Next.js 15 + Neon Postgres + Prisma on Vercel; Cloudflare Workers + D1 (reusing Maze Rush infra experience); Next.js on Cloudflare via OpenNext
+- **Chose:** Next.js 15 + Neon Postgres + Prisma (per DECISION-001), hosted on **Vercel Hobby during pre-revenue build and validation only**, with a mandatory hosting revisit at first dollar of revenue.
+- **Why:** steps 3 and 6 dominate — Next.js/TS is Advanced in `profiles/skills.yaml` and this mirrors the shipped Nextract_LMS stack, so velocity is the only real advantage a solo dev has here; learning D1 and edge paradigms inside a three-week build window spends that advantage. The schema (entries, evidence, skill events) is relational and still evolving, which favours Postgres + Prisma over D1. **Step 1 caveat, deliberately logged:** Vercel's Hobby tier is non-commercial only and names "processing payment" as commercial use — the moment Stripe checkout goes live, Hobby is a ToS violation. Neon's and Prisma's free tiers carry no such restriction.
+- **Trade-off accepted:** at monetization this forces either Vercel Pro at $20/mo (a recurring cost PRINCIPLE-003 requires justifying against actual revenue) or a hosting migration. Accepted because Next.js is portable — OpenNext deploys it to Cloudflare Workers, whose free tier permits commercial use — so the framework choice does not lock the hosting choice.
+- **Reversible?:** framework: no, cheaply. Hosting: yes — that is the point of separating them. **Revisit trigger: first paying customer.**
+- **Date:** 2026-08-05
+
+---
+
+### DECISION-009: On Record — product concept, name and positioning
+
+- **Options considered:** name — DevOx Records, Reckords, Track Record, Reckon, RCRD, On Record; positioning — "devlog with charts" / skill-growth tracker vs. evidence-and-proof career tool
+- **Chose:** **On Record**, positioned as *"never struggle to prove your impact again."* Developers' daily work is captured automatically and turned into an evidence-linked record they use at reviews, raises and interviews; growth tracking is the byproduct, not the pitch.
+- **Why:** rejected *DevOx Records* — [Devoxx](https://www.devoxx.com/) is an established global developer-conference brand one letter away in the same audience, and "DevOx" reads and searches as "DevOps". Rejected *Reckords* — a misspelling taxes the only growth channel available at this scale (word of mouth). "On the record" already means *attested, verifiable, undeniable*, which is the product in an idiom people use unprompted, and it yields the off-record/on-record duality that expresses the privacy rule. Positioning validated against two independent external critiques (ChatGPT, Gemini 3.1 Pro), both of which independently concluded the growth framing is aspirational while "prove what I shipped" is an acute, recurring, monetizable pain.
+- **Trade-off accepted:** two common words means weak trademark and hard SEO. Accepted deliberately — at a realistic $2–5k/mo solo ceiling, clarity in word-of-mouth beats defensibility. Ships on a `tinygridlabs.com` subdomain, so domain availability is not a constraint.
+- **Locked v1 scope:** GitHub ingest, auto-drafted daily entry, reflection field, standup generator, weekly recap, searchable evidence timeline, trajectories, Promotion Packet export, analytics from first commit. **Cut:** public shareable profile (deferred to v2 — four days of data is negative social proof), proficiency scores, skill radar, heatmaps, comp benchmarking, manager view, Jira/Linear, native mobile.
+- **Reversible?:** name — yes, cheaply, until first public launch. Positioning — yes, but it determines pricing, landing page and build order, so churning it is expensive in practice.
+- **Date:** 2026-08-05
 
 ---
 

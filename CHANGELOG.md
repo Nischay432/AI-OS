@@ -1,16 +1,21 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.6.1
+version: 0.6.2
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-08-02
+last_updated: 2026-08-05
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.6.2] - 2026-08-05
+
+### Added — On Record (third project) decision set
+- DECISION-009 (product concept, name and positioning — "On Record", evidence-and-proof framing over skill-growth framing; DevOx Records rejected on Devoxx brand collision), DECISION-010 (Next.js 15 + Neon + Prisma; Vercel Hobby is pre-revenue only — its non-commercial terms name "processing payment" as commercial use, so hosting is revisited at first paying customer), DECISION-011 (OAuth-first ingestion with local CLI as enterprise fallback, never as onboarding), DECISION-012 (growth shown as evidence-backed trajectories, never proficiency scores), DECISION-013 (seasonal one-time pricing; subscription and B2B both rejected) in `reference/decisions-log.md`
 
 ## [0.6.1] - 2026-08-02
 

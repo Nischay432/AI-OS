@@ -5,7 +5,7 @@ version: 0.5.0
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
-last_updated: 2026-08-02
+last_updated: 2026-08-03
 ---
 
 # Tool Evaluations
@@ -65,6 +65,14 @@ Covers: NotebookLM, Kling AI, Higgsfield AI, Runway ML, Seedance, Google Flow, L
 - **Landscape:** priced anywhere from free (via Dreamina/Doubao/Little Skylark trial credits) to ~$167/mo depending on platform; Dreamina's ~$9.60/mo tier was the best-value paid entry point as of this evaluation.
 - **Step 6:** same pattern as Kling — cost varies heavily by which aggregator is used, so this isn't a "subscribe once" decision.
 - **Verdict:** not adopted as a subscription. If a project needs a Seedance-quality clip, re-check current cheapest access point at that time rather than defaulting to a locked-in platform.
+
+## EVAL-008: MCP servers — ✅ Adopted (Context7 + Memory, user scope); web-search/token MCPs rejected as redundant
+
+- **Context:** first actual MCP adoption, ending the v0.3.0 deferral. Evaluated against Claude Code's built-ins rather than in a vacuum.
+- **Adopted:** `@upstash/context7-mcp` (live version-accurate library docs — React/Next/Expo/Godot; free, no key) and `@modelcontextprotocol/server-memory` (cross-chat knowledge-graph notes, local file at `~/.claude/mcp-memory.json`; free). Both npx stdio servers configured at user scope in `~/.claude.json`, so they load in every chat, not just this repo.
+- **Rejected:** web-search MCPs (Claude Code has built-in WebSearch/WebFetch + browser — pure redundancy) and any "token optimization" MCP (doesn't exist as a category; token discipline is PRINCIPLE-006 practice, and every added MCP *costs* context).
+- **Step 1 (free-first):** pass for both — no card, no key, local execution.
+- **Date:** 2026-08-03. Re-verify package health if either misbehaves; both are drop-one-line-from-config reversible.
 
 ---
 
