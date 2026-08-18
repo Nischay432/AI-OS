@@ -1,11 +1,11 @@
 ---
 id: REF-CCODE-001
 title: Claude Code Operating Reference
-version: 0.5.0
+version: 0.7.0
 status: Living document
 owner: Nischay
 depends_on: [CLAUDE-001, SYSTEM-001]
-last_updated: 2026-08-02
+last_updated: 2026-08-18
 ---
 
 # Claude Code Operating Reference
@@ -51,6 +51,10 @@ Plus:
 - **Subagent delegation** is the biggest lever: research/file sweeps run in a subagent's separate context and only the conclusion returns. Never read 30 files in the main loop.
 - Cache awareness: the system prompt + loaded files are cached per session; changing model/settings/CLAUDE.md mid-session invalidates it. Batch such changes.
 
+**Session length is the dominant cost, and `/compact` alone does not fix it.** Measured 2026-08-18 across a week of transcripts (weighting cache reads 0.1x, cache writes 2x, output 5x): a single session left open 2026-08-11 → 2026-08-18 grew to ~93 MB and was ~60% of the entire week's usage, with re-read history at ~67% of weighted cost — despite `/compact` having been run several times. Compaction trims, but each new burst of tool-heavy work (browser automation, media production, subagents) re-grows it.
+
+The fix is to stop the session, not to compress it harder: write a handoff doc and continue in a fresh one (DECISION-018). Practical rule — **one session per workstream, not per project.** When the work shifts (feature done → store submission → marketing assets), that is a checkpoint boundary, not a continuation.
+
 ## 4. Skills & slash commands
 
 - Project skills: `.claude/skills/<name>/SKILL.md`; user-global: `~/.claude/skills/`.
@@ -61,7 +65,14 @@ Plus:
 
 ## 5. Hooks (deterministic automation)
 
-Configured in `settings.json` under `hooks`; run as code, not context. Events: `SessionStart`, `PreToolUse` (can block, exit 1), `PostToolUse` (can inject context), `SessionEnd`. Canonical uses: format-on-edit (PostToolUse + prettier), guardrails (PreToolUse block on dangerous commands). Keep hooks <1s; AI-OS deliberately ships none yet — add one only when a manual step has been repeated twice (same bar as playbooks).
+Configured in `settings.json` under `hooks`; run as code, not context. Events include `SessionStart`, `UserPromptSubmit` (fires before the turn; can inject context), `PreToolUse` (can block, exit 1), `PostToolUse` (can inject context), `PreCompact`, `SessionEnd`. Canonical uses: format-on-edit (PostToolUse + prettier), guardrails (PreToolUse block on dangerous commands). Keep hooks <1s. Bar for adding one is unchanged — only after a manual step has been repeated twice (same bar as playbooks).
+
+**First earned hook (2026-08-18), at user scope rather than in this repo** because it is a habit problem, not an AI-OS problem: a `UserPromptSubmit` hook stats the session transcript and warns once per size band, pairing with a `checkpoint` skill that writes the handoff doc (DECISION-018). Two mechanics worth reusing:
+
+- `UserPromptSubmit` output shape is `{"systemMessage": "...", "hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "..."}}` — `systemMessage` is shown to the user, `additionalContext` is injected into the model's context. Exit code must be 0 for the JSON to parse.
+- **Warn on band crossings, not on a threshold.** A plain `if (size > limit)` fires every turn forever and gets ignored; recording the last band crossed in a state file keeps it to one warning per escalation.
+
+Gotcha: the settings watcher only watches directories that had a settings file when the session started, so creating `~/.claude/settings.json` for the first time needs a restart before hooks load.
 
 ## 6. Subagents
 

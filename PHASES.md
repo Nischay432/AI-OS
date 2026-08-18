@@ -1,11 +1,11 @@
 ---
 id: PHASES-001
 title: Phase Map
-version: 0.6.0
+version: 0.7.0
 status: Living document
 owner: Nischay
 depends_on: [SYSTEM-001, ROADMAP-001]
-last_updated: 2026-08-02
+last_updated: 2026-08-18
 ---
 
 # Phase Map
@@ -63,6 +63,18 @@ Delivered:
 Maze Rush (Cloudflare Workers multiplayer maze race, pre-existing project) was polished and shipped through AI-OS: maze-generation overhaul (DECISION-006), true fog of war (DECISION-005), reconnect/rejoin, solo time-trial mode, MIT license + CI (DECISION-008), DO-durability deferral (DECISION-007). Produced the first earned playbook: `playbooks/ship-cf-workers-multiplayer.md` (PLAY-CFSHIP-001).
 
 This half-fires Phase 5's trigger ("at least one app and one game have shipped"): a game has now shipped, though via the web stack rather than the Godot track, which stays open.
+
+## Interlude — first distribution push: portals + Android (v0.7.0, 2026-08-15 → 08-19)
+
+Maze Rush went from "live on its own domain" to portal-submitted and Android-packaged in five days, over one codebase. Delivered:
+
+- DECISION-014 (build-time platform adapters; never fork screens per target), DECISION-015 (server-side input-replay validation for competitive runs), DECISION-016 (Capacitor WebView wrapper for Android), DECISION-017 (first-party analytics, no third-party SDK), DECISION-018 (session hygiene: checkpoint handoffs over long-lived sessions), DECISION-019 (two-vendor AI critique, adjudicated and then re-tested against users)
+- Second earned playbook: `playbooks/ship-web-game-to-portals-and-android.md` (PLAY-PORTAL-001)
+- REF-CCODE-001 updated with the first earned hook and the measured cost of long-lived sessions
+
+Two of these generalize past games. DECISION-018 is PRINCIPLE-006 finally given a mechanism, and DECISION-019 records both the value of adjudicated AI critique *and* its failure mode — a ruling that survived two rounds still shipped as a bug and was reverted next day.
+
+**Phase 5 status unchanged:** still half-fired. A game has shipped and now distributed; no daily-use *app* has shipped yet. On Record (DECISION-009..013) is decided but not built.
 
 ## Phase 5 — v1.0.0 consolidation — BLOCKED (not skippable)
 

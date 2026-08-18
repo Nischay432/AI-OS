@@ -1,16 +1,27 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.6.2
+version: 0.7.0
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-08-05
+last_updated: 2026-08-18
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.7.0] - 2026-08-18
+
+### Added — distribution push (Maze Rush → portals + Android) and session hygiene
+- DECISION-014 (one codebase, build-time platform adapters; wire protocol never carries cosmetic state), DECISION-015 (competitive runs validated by server-side input replay against the shared seed), DECISION-016 (Android via Capacitor WebView wrapper, with the four WebView traps that cost real debugging time), DECISION-017 (first-party analytics over any third-party SDK), DECISION-018 (session hygiene — checkpoint handoffs over long-lived sessions), DECISION-019 (two-vendor AI critique, adjudicated then re-tested against users) in `reference/decisions-log.md`
+- `playbooks/ship-web-game-to-portals-and-android.md` (PLAY-PORTAL-001) — second earned playbook, covering the portal seam, uploader constraints, WebView traps, analytics minimums, and mobile-web traps invisible on desktop
+
+### Changed
+- `reference/claude-code-guide.md` §3: measured finding that session *length* is the dominant token cost and `/compact` alone does not fix it — one session open 2026-08-11 → 08-18 was ~60% of a week's usage. New rule: one session per workstream, not per project.
+- `reference/claude-code-guide.md` §5: AI-OS no longer ships zero hooks — first earned hook documented (user scope), with the `UserPromptSubmit` output schema and the warn-on-band-crossing pattern.
+- `PHASES.md`: distribution interlude added; Phase 5 still half-fired (game shipped and distributed, no daily-use app yet).
 
 ## [0.6.2] - 2026-08-05
 
