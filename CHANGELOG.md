@@ -1,16 +1,24 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.7.1
+version: 0.8.0
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-08-18
+last_updated: 2026-08-22
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.8.0] - 2026-08-22
+
+### Added — Play Store release pipeline (Maze Rush signed AAB)
+- DECISION-020 in `reference/decisions-log.md` — CI-built signed AAB from a secret-held upload keystore, Play App Signing, hard-fail on unsigned release builds, R8 deferred to a post-launch isolated experiment, artifact-level signature verification.
+
+### Changed
+- `playbooks/ship-web-game-to-portals-and-android.md` (PLAY-PORTAL-001): §3 gains two WebView traps (dead `target="_blank"` anchors — external links need the Capacitor Browser plugin; backup rules must exclude `app_webview`); new §3b "Store release (Play)" covering the signing pipeline, the three-fingerprint assetlinks requirement, the PowerShell CRLF-in-secrets trap, the Play Console hidden-Continue verification modal, and offline retry queues for self-hosted error beacons.
 
 ## [0.7.1] - 2026-08-18
 
