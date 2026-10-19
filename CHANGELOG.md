@@ -1,16 +1,21 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.8.0
+version: 0.8.1
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-08-22
+last_updated: 2026-10-19
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.8.1] - 2026-10-19
+
+### Changed
+- `playbooks/ship-web-game-to-portals-and-android.md` (PLAY-PORTAL-001) §3b: R8 enabled as the isolated follow-up DECISION-020 deferred (results, the Cordova `config.xml` keep, mapping bundled in the AAB); web-only `public/` folders bloating the app; a CI emulator release gate driven over the WebView's DevTools socket, with its three runner traps (disk, Play services restarts killing the app, logcat buffer); AdMob plugin lessons (no ProGuard rules but R8-safe, rewarded promise never settles on early close, kill switch tested via CDP interception).
 
 ## [0.8.0] - 2026-08-22
 

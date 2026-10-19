@@ -1,11 +1,11 @@
 ---
 id: PLAY-PORTAL-001
 title: Ship a web game to a game portal and Android
-version: 0.8.0
+version: 0.8.1
 status: Stable
 owner: Nischay
 depends_on: [REF-DECISIONS-001, PLAY-CFSHIP-001]
-last_updated: 2026-08-22
+last_updated: 2026-10-19
 ---
 
 # Playbook: Ship a web game to a game portal and Android
@@ -53,6 +53,10 @@ Earned taking the same wrapper from debug APKs to a signed, Play-ready AAB (2026
 - **assetlinks needs three fingerprints** once Play App Signing is on: debug (dev builds), upload key (direct-installed release builds), and Google's app-signing key (store installs). Missing the last one silently kills deep links for every store user.
 - **PowerShell pipes append CRLF to secrets.** `$val | gh secret set` and `$val | wrangler secret put` both store a trailing newline that `base64 -d` (or an equality check) rejects. Use `gh secret set --body` / bash `printf '%s'`, and verify a secret-dependent job end-to-end after setting it.
 - **Play Console's ID-verification modal hides its Continue button below the fold.** "Upload complete — we're ready to continue" means *you* must scroll the modal and submit; an upload can sit unsubmitted for days looking like Google is slow. The `status: SUCCESS` in the network tab is the file upload, not the submission.
+- **R8 as the isolated follow-up (Maze Rush 1.5, 2026-10-19):** `proguard-android-optimize.txt` + Capacitor's own consumer rules (plugins are kept via `extends Plugin`) took `classes.dex` from 7.3 MB to 0.94 MB with no crash. Pin `@xml/config` in a `res/raw/keep.xml` — Cordova's parser finds it by name. AGP bundles the mapping file into the AAB (`BUNDLE-METADATA/…/proguard.map`), so Play deobfuscates without a manual upload; keep a copy as a CI artifact for `retrace`.
+- **Check what `public/` drags into the app.** A web press kit (trailers, covers) was 84% of the shrunk AAB. Drop web-only folders from the app build output.
+- **Gate release builds on a CI emulator, driven over CDP.** With no local SDK, a `workflow_dispatch` job runs the release-type APK (debug-key signed, so no secrets) on `reactivecircus/android-emulator-runner` and drives the WebView through its DevTools socket: plugin headers, App Links warm/cold, back button, share sheet, ads. Turn on `webContentsDebuggingEnabled` and compile analytics off for that build only. Traps it hit: the AVD's default 7 GB data partition doesn't fit the runner (free toolchains, `disk-size: 4096M`); a fresh emulator restarts Play services and **kills apps bound to them** (the WebView uses their font provider) while first-boot theme overlays relaunch the activity — do a throwaway launch, wait until `gms.persistent` holds one pid, then `pm clear`; `logcat -d` overflows Node's 1 MB exec buffer and the ring buffer drops the crash — stream logcat to a file from the start.
+- **AdMob through `@capacitor-community/admob`:** it ships no ProGuard rules but survives R8 on Capacitor's plugin keep rule — prove it with an E2E run, not an assumption. `showRewardVideoAd()` never settles if the player closes early: resolve from the `Dismissed`/`Rewarded` events. Test the server kill switch by serving the config over CDP `Fetch` interception, so the test doesn't depend on production.
 - **Self-hosted error beacons need an offline retry queue.** The crashes most worth seeing (startup, offline) are exactly the ones a fire-and-forget beacon loses; park failed batches in localStorage and flush on next launch. Native crashes stay invisible without a crash SDK — Play vitals only covers opted-in devices, accepted for a small closed test.
 
 ## 4. Instrument before you need the answer
