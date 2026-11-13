@@ -1,11 +1,11 @@
 ---
 id: REF-TOOLS-001
 title: Tool Evaluations
-version: 0.7.1
+version: 0.9.0
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
-last_updated: 2026-08-18
+last_updated: 2026-11-13
 ---
 
 # Tool Evaluations
@@ -84,6 +84,41 @@ Covers: NotebookLM, Kling AI, Higgsfield AI, Runway ML, Seedance, Google Flow, L
 - **Caveat on popularity:** the repo reports an implausible star count for its age and profile. Treat the social proof as unverified and judge files on their contents — which is why only files actually read were reused.
 - **Standing rule:** harness bundles get mined for *patterns*, never installed wholesale. A skill earns a place the same way a playbook does — after the manual version has been done at least twice.
 - **Date:** 2026-08-18. Revisit only if a specific repeated task has no local answer.
+
+## EVAL-010: Claude Code plugins, skills and MCP servers from a social-media shortlist — ✅ Nine installed on a trial basis; the rest rejected
+
+- **Context:** about 45 tools suggested across ten Instagram reels, triaged against what the projects under `Downloads/Repos` actually need (Maze Rush, the Suki Shorts channel, SWAPPED v2, portfolio, On Record). Installed 2026-11-13 at Nischay's instruction.
+- **Departs from the EVAL-009 standing rule.** None of these was earned by doing the manual version twice first. Treat every row below as a trial: anything unused by the review date gets removed.
+- **Installed:**
+
+  | Tool | Kind | Scope | What it is for |
+  |---|---|---|---|
+  | `claude-code-setup@claude-plugins-official` | plugin (Anthropic) | user | Scans a repo and recommends hooks, skills, subagents and MCP servers for it |
+  | `taste-skill@taste-skill` (Leonxlnx) | plugin | user | Design direction for web UI, with a real-browser finish check |
+  | `web-design-guidelines` (vercel-labs/agent-skills) | skill | user (`~/.claude/skills/`) | Audits UI code against Vercel's Web Interface Guidelines; fetches the rules at run time |
+  | `pixelfx@pixelfx` (patch-gg) | plugin | user | Pixel-art effects as code, exported as sprite sheets |
+  | `ponytail@ponytail` (DietrichGebert) | plugin | user | Pushes toward the shortest working solution |
+  | `youtube-agent@youtube-agent-skill` (Jakeschincariol) | plugin | user, and project in `youtube-channel/` | Eleven `/yt-*` skills: hooks, titles, retention, planning, SEO |
+  | `blender-skills@blender-skills` (arjun988) | plugin | project, `games/swapped2/` only | 95 Blender skills driven through the Blender MCP server |
+  | Godot MCP (`@coding-solo/godot-mcp`) | MCP server | project, `games/swapped2/.mcp.json` | Launch the editor, run the project, read debug output |
+  | Blender MCP (`mcp-for-blender`) | MCP server | project, `games/swapped2/.mcp.json` | Configured with telemetry off; the Blender addon is not installed yet |
+  | SkillSpector 2.12.0 (NVIDIA) | CLI, `uv tool` | machine | Scans a skill pack before install |
+
+- **Step 1 (free-first):** pass for all — MIT or Apache-2.0, no key, no card. New machine dependencies: `uv` (winget) and a uv-managed Python 3.12.
+- **Step 6 (context cost, PRINCIPLE-006):** the 95-skill Blender pack is scoped to `games/swapped2/` so its descriptions never load elsewhere. Ponytail is the only one that adds hooks (`SessionStart`, `SubagentStart`, `UserPromptSubmit`) and it writes a per-task ledger to `~/.config/ponytail/band/`; its webhook is empty, so nothing leaves the machine.
+- **Pre-install scan (SkillSpector, static checks only):** YouTube, Ponytail, web-design-guidelines and Blender packs scored 0/100. pixelfx scored 29: its SKILL.md section 5 offers to install the Patch CLI by remote script and publish the game on patch.gg — decline that step. taste-skill scored 100 on "hidden instructions"; the flagged lines were read and are ordinary HTML comments in its templates (false positive).
+- **Open item — Blender addon:** using Blender MCP means agreeing to its terms of use, and it sends an anonymous usage record unless telemetry is disabled. That agreement is Nischay's to make, so the addon was left uninstalled. To finish: `uvx mcp-for-blender install-addon`, enable it in Blender, then press Connect in the sidebar.
+- **Rejected:**
+  - OmniRoute, FreeLLMAPI — swap in weaker free models mid-session and route code through many third-party providers.
+  - claude-mem, Headroom, Task Observer — duplicate auto memory, the Memory MCP, handoffs and the checkpoint hook (DECISION-018).
+  - Agent Reach — the signed-in Chrome already reaches those sites; cookie scraping risks the channel's accounts.
+  - Strix — needs Docker and a paid model key; `/security-review` covers it.
+  - ECC, Claude Code Game Studios — wholesale harness bundles (see EVAL-009).
+  - Playwright CLI — the built-in browser preview already inspects and tests UI.
+  - Unreal Claude, Audio2Face-3D, ACE-Step — wrong engine, 3D-only lip sync, music already generated in code.
+  - OpenHiggsField, Voice Studio, OpenSEO, AppFlowy, OpenWhisper, OpenProject, Cal.com, Chatwoot, Cap — standalone apps, not Claude Code extensions.
+- **Remove with:** `claude plugin uninstall <name>@<marketplace>`; delete `~/.claude/skills/web-design-guidelines/`; delete the server from `games/swapped2/.mcp.json`; `uv tool uninstall skillspector`.
+- **Date:** 2026-11-13. Review on 2026-12-13: keep what was actually invoked, uninstall the rest.
 
 ---
 

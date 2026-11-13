@@ -1,11 +1,11 @@
 ---
 id: REF-CCODE-001
 title: Claude Code Operating Reference
-version: 0.7.0
+version: 0.9.0
 status: Living document
 owner: Nischay
 depends_on: [CLAUDE-001, SYSTEM-001]
-last_updated: 2026-08-18
+last_updated: 2026-11-13
 ---
 
 # Claude Code Operating Reference
@@ -63,6 +63,25 @@ The fix is to stop the session, not to compress it harder: write a handoff doc a
 - Only descriptions load by default; the body loads on invocation — cheap to have many.
 - AI-OS ships `/log-decision` (`.claude/skills/log-decision/`).
 
+### Plugins (installed 2026-11-13, EVAL-010)
+
+A plugin bundles skills, hooks and commands and installs from a marketplace (a GitHub repo). User scope loads everywhere; project scope writes `enabledPlugins` into that folder's `.claude/settings.json` and loads only there.
+
+| Plugin | Scope | Use it for |
+|---|---|---|
+| `claude-code-setup` | user | "Set up Claude Code for this project" — recommends automations for a repo |
+| `taste-skill` | user | Web UI design direction |
+| `pixelfx` | user | Pixel-art effects for games |
+| `ponytail` | user | Shorter code; adds three hooks |
+| `youtube-agent` | user | `/yt-script`, `/yt-package`, `/yt-retention`, `/yt-plan` and seven more |
+| `blender-skills` | project (`games/swapped2/`) | 3D asset work through Blender |
+
+Plus one loose skill at user scope: `web-design-guidelines` ("review my UI").
+
+- There is no `claude` command on this machine's PATH (the desktop app bundles its own). Run the CLI as `npx -y @anthropic-ai/claude-code plugin list | install | uninstall | marketplace add`.
+- Scan a third-party pack before installing it: `skillspector scan <folder> --recursive --no-llm`. Read any flagged line yourself — the scanner reports plain HTML comments as hidden instructions.
+- New plugins and skills load in the next session, not the one that installed them.
+
 ## 5. Hooks (deterministic automation)
 
 Configured in `settings.json` under `hooks`; run as code, not context. Events include `SessionStart`, `UserPromptSubmit` (fires before the turn; can inject context), `PreToolUse` (can block, exit 1), `PostToolUse` (can inject context), `PreCompact`, `SessionEnd`. Canonical uses: format-on-edit (PostToolUse + prettier), guardrails (PreToolUse block on dangerous commands). Keep hooks <1s. Bar for adding one is unchanged — only after a manual step has been repeated twice (same bar as playbooks).
@@ -89,6 +108,7 @@ Precedence: managed policy → CLI flags → `.claude/settings.local.json` (pers
 - Add: `claude mcp add [--scope user|project] [--transport http] <name> <url-or-command>`; project scope writes committed `.mcp.json`; secrets via `${ENV_VAR}` in config, never committed.
 - Status/auth: `/mcp` in-session; `claude mcp list`.
 - Posture unchanged from CLAUDE-001: evaluate any MCP through FRAMEWORK-001 and log an EVAL — still deferred until a project needs one (per v0.3.0).
+- Configured today: Context7 and Memory at user scope (EVAL-008); Pollinations in `Downloads/Repos/.mcp.json`; Godot and Blender in `games/swapped2/.mcp.json` (EVAL-010). A `.mcp.json` in a parent folder also applies to sessions opened below it. GUI-launched sessions do not inherit the terminal PATH, so the Blender entry uses the full path to `uvx.exe`.
 
 ## 9. Headless / automation
 

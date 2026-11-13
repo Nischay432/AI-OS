@@ -1,16 +1,24 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.8.1
+version: 0.9.0
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-10-19
+last_updated: 2026-11-13
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.9.0] - 2026-11-13
+
+### Added — Claude Code plugins, skills and MCP servers (trial)
+- EVAL-010 in `reference/tool-evaluations.md` — nine tools installed from a social-media shortlist (claude-code-setup, taste-skill, web-design-guidelines, pixelfx, Ponytail, youtube-agent, blender-skills, Godot MCP, SkillSpector), with scopes, the pre-install scan results, the rejected list, removal commands and a 2026-12-13 review date. Recorded as a departure from the EVAL-009 standing rule.
+
+### Changed
+- `reference/claude-code-guide.md` (REF-CCODE-001): §4 gains a Plugins subsection (what is installed, at which scope, how to run the CLI through `npx` on this machine, scan-before-install); §8 lists the MCP servers configured today and where each lives.
 
 ## [0.8.1] - 2026-10-19
 
