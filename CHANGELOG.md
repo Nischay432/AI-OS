@@ -1,16 +1,24 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.9.0
+version: 0.9.1
 status: Living document
 owner: Nischay
 depends_on: []
-last_updated: 2026-11-13
+last_updated: 2026-11-16
 ---
 
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.9.1] - 2026-11-16
+
+### Added
+- EVAL-011 in `reference/tool-evaluations.md` — brag adopted after making the Maze Rush launch video, including the no-install render route (Remotion from the channel studio via a `node_modules` junction, game source imported directly); OpenJarvis and OmniRoute not adopted, the game-dev skills pack deferred to SWAPPED v2.
+
+### Changed
+- `reference/claude-code-guide.md` (REF-CCODE-001) §4: `brag` added to the installed-plugins table.
 
 ## [0.9.0] - 2026-11-13
 

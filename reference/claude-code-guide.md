@@ -1,11 +1,11 @@
 ---
 id: REF-CCODE-001
 title: Claude Code Operating Reference
-version: 0.9.0
+version: 0.9.1
 status: Living document
 owner: Nischay
 depends_on: [CLAUDE-001, SYSTEM-001]
-last_updated: 2026-11-13
+last_updated: 2026-11-16
 ---
 
 # Claude Code Operating Reference
@@ -75,6 +75,7 @@ A plugin bundles skills, hooks and commands and installs from a marketplace (a G
 | `ponytail` | user | Shorter code; adds three hooks |
 | `youtube-agent` | user | `/yt-script`, `/yt-package`, `/yt-retention`, `/yt-plan` and seven more |
 | `blender-skills` | project (`games/swapped2/`) | 3D asset work through Blender |
+| `brag` | user | "Let's /brag about this" — a 20 s launch video for a shipped project (EVAL-011) |
 
 Plus one loose skill at user scope: `web-design-guidelines` ("review my UI").
 

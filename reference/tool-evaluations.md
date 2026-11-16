@@ -1,11 +1,11 @@
 ---
 id: REF-TOOLS-001
 title: Tool Evaluations
-version: 0.9.0
+version: 0.9.1
 status: Living document
 owner: Nischay
 depends_on: [FRAMEWORK-001]
-last_updated: 2026-11-13
+last_updated: 2026-11-16
 ---
 
 # Tool Evaluations
@@ -119,6 +119,20 @@ Covers: NotebookLM, Kling AI, Higgsfield AI, Runway ML, Seedance, Google Flow, L
   - OpenHiggsField, Voice Studio, OpenSEO, AppFlowy, OpenWhisper, OpenProject, Cal.com, Chatwoot, Cap — standalone apps, not Claude Code extensions.
 - **Remove with:** `claude plugin uninstall <name>@<marketplace>`; delete `~/.claude/skills/web-design-guidelines/`; delete the server from `games/swapped2/.mcp.json`; `uv tool uninstall skillspector`.
 - **Date:** 2026-11-13. Review on 2026-12-13: keep what was actually invoked, uninstall the rest.
+
+## EVAL-011: brag (`latent-spaces/brag`) — ✅ Adopted after one real use; OpenJarvis, OmniRoute and a game-dev skills pack assessed
+
+- **Context:** a second batch of reel suggestions, 2026-11-16. Unlike EVAL-010, brag was used on a real project the same day it was installed.
+- **Adopted — `brag@brag` (plugin, user scope, MIT):** turns a project into a ~20 s launch video with soundtrack and share copy. On current models `/brag` hands off to `/brag-slim`, which is a creative brief, not a renderer: Claude builds the video with whatever is on the machine.
+- **First use — Maze Rush:** output in `fullstack/maze-rush/marketing/brag-output/` (`brag.mp4` vertical 1080×1920, `brag-landscape.mp4` 1920×1080 for the Play listing, `share-copy.txt`, `brag-plan.md`). The maze is the game's own `generateMaze` / `solvePath`; colours and fonts are the game's tokens.
+- **How it was rendered here (reusable):** no new installs. `work/node_modules` is a junction to `youtube-channel/studio/node_modules`, so the Remotion already installed for the channel bundles a composition living in the game repo, which imports the game's TypeScript source by relative path. The soundtrack is synthesised by a small Node script on the same beat grid as the cuts. Remotion fetched a ~120 MB headless Chrome on first render.
+- **Pre-install scan:** SkillSpector scored 100 on two patterns; both lines were read and are harmless — a README install path, and the instruction "prefer a package manager over `curl | sh`" itself matching the remote-script rule.
+- **Step 1 (free-first):** pass. The hosted letsbrag.app alternative was not used.
+- **Not adopted:**
+  - OpenJarvis (Stanford, Apache-2.0) — a local assistant on an Ollama model. It would compete with ComfyUI for an 8 GB GPU, and the Gmail connector, scheduled tasks and the morning brief already do its job. Revisit only for offline use.
+  - OmniRoute, second look — it does expose image and speech endpoints and a ChatGPT-subscription login, but that login runs a consumer account through a third-party gateway (account risk; Anthropic's terms forbid it outright for Claude logins). Pollinations and ComfyUI already cover images; a free Gemini API key called directly covers automated second opinions.
+  - awesome-gamedev-agent-skills — only its Godot bundle (~15 skills) fits, and only SWAPPED v2. Deferred until that project is active; then install router + Godot bundle at project scope in `games/swapped2/`.
+- **Date:** 2026-11-16. brag is reviewed with the EVAL-010 set on 2026-12-13.
 
 ---
 
