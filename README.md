@@ -67,6 +67,7 @@ AI-OS/
 ├── reference/
 │   ├── decisions-log.md
 │   ├── tool-evaluations.md
+│   ├── side-hustle-evaluation.md
 │   └── claude-code-guide.md
 ├── templates/
 │   ├── web-nextjs-starter/
@@ -75,7 +76,9 @@ AI-OS/
 ├── prompts/
 │   ├── new-project-kickoff.md
 │   └── log-a-decision.md
-├── playbooks/            # empty until something ships (see docs/Architecture.md)
+├── playbooks/            # written only after a task ships (see docs/Architecture.md)
+│   ├── ship-cf-workers-multiplayer.md
+│   └── ship-web-game-to-portals-and-android.md
 ├── workflows/            # empty until a workflow is used twice
 └── assets/
 ```

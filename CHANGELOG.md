@@ -1,7 +1,7 @@
 ---
 id: CHANGELOG-001
 title: Changelog
-version: 0.9.1
+version: 0.10.0
 status: Living document
 owner: Nischay
 depends_on: []
@@ -11,6 +11,14 @@ last_updated: 2026-11-16
 # Changelog
 
 All notable changes to AI-OS. Semantic versioning (no date-based versions). The newest entry here **is** the repo version (DECISION-004).
+
+## [0.10.0] - 2026-11-16
+
+### Added
+- `reference/side-hustle-evaluation.md` (REF-HUSTLE-001) — verdicts with reopen conditions for six AI-assisted side businesses (clipping, AI UGC, indie games, AI Shorts, Instagram + YouTube distribution, AI trading), the options outside that list worth testing, a seven-step method for judging the next idea, and dated platform facts. Evaluations only; nothing logged as a decision.
+
+### Changed
+- `README.md` structure tree lists the new reference file and the two playbooks that now exist.
 
 ## [0.9.1] - 2026-11-16
 
